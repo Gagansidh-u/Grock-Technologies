@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const options = {
-            "key": "rzp_live_udvZnCQS9Gpg03",
+            "key": "rzp_live_udvZnCQS9GpgO3",
             "amount": finalAmount * 100,
             "currency": "INR",
             "name": "Grock Technologies",
