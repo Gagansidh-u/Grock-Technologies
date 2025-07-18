@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Grock Technologies</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-panel">
+        <aside class="admin-sidebar">
+            <h2>Admin</h2>
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="#" class="active" data-target="dashboard">Dashboard</a></li>
+                    <li><a href="#" data-target="orders">Orders</a></li>
+                </ul>
+            </nav>
+            <button id="logout-btn" class="btn">Logout</button>
+        </aside>
+        <main class="admin-main">
+            <section id="dashboard" class="admin-section">
+                <h1>Dashboard</h1>
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <h3>Total Orders</h3>
+                        <p class="stat-number" id="total-orders">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Pending</h3>
+                        <p class="stat-number" id="pending-orders">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>In Progress</h3>
+                        <p class="stat-number" id="inprogress-orders">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Delivered</h3>
+                        <p class="stat-number" id="delivered-orders">0</p>
+                    </div>
+                </div>
+            </section>
+            <section id="orders" class="admin-section" style="display: none;">
+                <h1>Manage Orders</h1>
+                <div id="admin-orders-list" class="admin-orders-list">
+                    <!-- Admin orders list will be populated here -->
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="admin.js"></script>
+</body>
+</html>
