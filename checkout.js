@@ -55,11 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const finalAmount = updateTotal();
 
-        // Save order to localStorage
         const orderDetails = {
             orderId: `order_${Date.now()}`,
             date: new Date().toLocaleString(),
-            status: 'Pending', // Default status
+            status: 'Pending',
+            paymentId: null, // To be filled on success
             customer: { name, email, phone },
             plan: {
                 name: planName,
@@ -72,15 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
             project: { websiteType, designStyle, featuresNeeded }
         };
 
-        // Razorpay Integration
         const options = {
-            "key": "rzp_live_udvZnCQS9Gpg03", // Your live key. The secret key is NOT used in frontend code.
-            "amount": finalAmount * 100, // Amount in the smallest currency unit (paise)
+            "key": "rzp_live_udvZnCQS9Gpg03",
+            "amount": finalAmount * 100,
             "currency": "INR",
             "name": "Grock Technologies",
             "description": `Payment for ${planName}`,
             "handler": function (response){
-                // On successful payment, save the order and redirect
+                orderDetails.paymentId = response.razorpay_payment_id;
                 let orders = JSON.parse(localStorage.getItem('orders')) || [];
                 orders.push(orderDetails);
                 localStorage.setItem('orders', JSON.stringify(orders));
@@ -91,11 +90,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 "email": email,
                 "contact": phone
             },
+            "notes": {
+                "internal_order_id": orderDetails.orderId,
+                "customer_name": name,
+                "plan": planName
+            },
             "theme": {
                 "color": "#6366f1"
+            },
+            "modal": {
+                "ondismiss": function() {
+                    console.log('Checkout form closed by user.');
+                    alert('Payment was not completed. Your order has not been placed.');
+                }
             }
         };
-        const rzp1 = new Razorpay(options);
-        rzp1.open();
+
+        try {
+            const rzp1 = new Razorpay(options);
+            
+            rzp1.on('payment.failed', function (response) {
+                console.error('Payment Failed:', response);
+                alert(`Payment failed. Error: ${response.error.description}. Please try again or contact support.`);
+            });
+
+            rzp1.open();
+        } catch (error) {
+            console.error("Error initializing Razorpay:", error);
+            alert("Could not initialize payment gateway. Please check your connection or contact support.");
+        }
     });
 });

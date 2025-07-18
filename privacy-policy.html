@@ -11,7 +11,10 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
-                 <a href="index.html"><img src="/Logo.png" alt="Grock Technologies Logo" class="logo"></a>
+                <a href="index.html" class="brand-link">
+                    <img src="/Logo.png" alt="Grock Technologies Logo" class="logo">
+                    <span>Grock Technologies</span>
+                </a>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html#home" class="nav-link">Home</a></li>
@@ -19,7 +22,21 @@
                 <li><a href="pricing.html" class="nav-link">Pricing</a></li>
                 <li><a href="about.html" class="nav-link">About Us</a></li>
                 <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Legal</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-conditions.html">Terms & Conditions</a></li>
+                        <li><a href="cancellation-refund.html">Cancellation & Refund</a></li>
+                        <li><a href="shipping-delivery.html">Shipping & Delivery</a></li>
+                    </ul>
+                </li>
             </ul>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
 
@@ -130,7 +147,7 @@
             </div>
         </div>
     </footer>
-
+    <script src="script.js"></script>
     <style>
         .legal-page {
             padding: 120px 0 80px;

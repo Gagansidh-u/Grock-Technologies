@@ -36,6 +36,16 @@ body {
     padding: 1rem 20px;
 }
 
+.nav-brand .brand-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #1e293b;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
 .nav-brand .logo {
     height: 40px;
     width: auto;
@@ -838,6 +848,7 @@ body {
 /* Payment Successful Page */
 .success-page {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
@@ -1172,5 +1183,8 @@ body {
     
     .nav-brand .logo {
         height: 30px;
+    }
+    .nav-brand .brand-link {
+        font-size: 1rem;
     }
 }
