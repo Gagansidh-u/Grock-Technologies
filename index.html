@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grock Technologies - Professional Website Building Services</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/ico">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
-                <a href="index.html" class="brand-link">
+                <a href="/" class="brand-link">
                     <img src="/favicon.ico" alt="Grock Technologies Logo" class="logo">
                     <span>Grock Technologies</span>
                 </a>
@@ -22,19 +21,22 @@
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#features" class="nav-link">Features</a></li>
-                <li><a href="pricing.html" class="nav-link">Pricing</a></li>
-                <li><a href="about.html" class="nav-link">About Us</a></li>
+                <li><a href="/pricing/" class="nav-link">Pricing</a></li>
+                <li><a href="/about/" class="nav-link">About Us</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
                 <li class="dropdown">
                     <a href="#" class="nav-link">Legal</a>
                     <ul class="dropdown-menu">
-                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                        <li><a href="terms-conditions.html">Terms & Conditions</a></li>
-                        <li><a href="cancellation-refund.html">Cancellation & Refund</a></li>
-                        <li><a href="shipping-delivery.html">Shipping & Delivery</a></li>
+                        <li><a href="/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="/terms-conditions/">Terms & Conditions</a></li>
+                        <li><a href="/cancellation-refund/">Cancellation & Refund</a></li>
+                        <li><a href="/shipping-delivery/">Shipping & Delivery</a></li>
                     </ul>
                 </li>
             </ul>
+            <div class="nav-auth">
+                <!-- Auth links will be injected by auth.js -->
+            </div>
             <div class="nav-toggle">
                 <span></span>
                 <span></span>
@@ -51,7 +53,7 @@
                     <h1>Build Your Dream Website with Professional Excellence</h1>
                     <p>Transform your business with our expert web development services. From stunning designs to powerful functionality, we create websites that drive results.</p>
                     <div class="hero-buttons">
-                        <a href="pricing.html" class="btn btn-primary">Get Started</a>
+                        <a href="/pricing/" class="btn btn-primary">Get Started</a>
                         <a href="#features" class="btn btn-secondary">Learn More</a>
                     </div>
                 </div>
@@ -124,7 +126,7 @@
                 <p>We offer a range of plans to fit your needs, from powerful hosting solutions to fully custom website builds.</p>
             </div>
             <div class="cta-button-container">
-                <a href="pricing.html" class="btn btn-primary">View Our Plans</a>
+                <a href="/pricing/" class="btn btn-primary">View Our Plans</a>
             </div>
         </div>
     </section>
@@ -155,18 +157,18 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form>
+                    <form id="contact-form">
                         <div class="form-group">
-                            <input type="text" placeholder="Your Name" required>
+                            <input type="text" name="name" placeholder="Your Name" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" placeholder="Your Email" required>
+                            <input type="email" name="email" placeholder="Your Email" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" placeholder="Subject" required>
+                            <input type="text" name="subject" placeholder="Subject" required>
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Your Message" rows="5" required></textarea>
+                            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Send Message</button>
                     </form>
@@ -188,18 +190,18 @@
                     <ul>
                         <li><a href="#home">Home</a></li>
                         <li><a href="#features">Features</a></li>
-                        <li><a href="pricing.html">Pricing</a></li>
-                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="/pricing/">Pricing</a></li>
+                        <li><a href="/about/">About Us</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Legal</h4>
                     <ul>
-                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                        <li><a href="terms-conditions.html">Terms & Conditions</a></li>
-                        <li><a href="cancellation-refund.html">Cancellation & Refund</a></li>
-                        <li><a href="shipping-delivery.html">Shipping & Delivery</a></li>
+                        <li><a href="/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="/terms-conditions/">Terms & Conditions</a></li>
+                        <li><a href="/cancellation-refund/">Cancellation & Refund</a></li>
+                        <li><a href="/shipping-delivery/">Shipping & Delivery</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -214,6 +216,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="/auth.js"></script>
+    <script src="/script.js"></script>
 </body>
 </html>

@@ -1,42 +1,46 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    const planName = params.get('plan') || 'N/A';
-    const basePrice = parseInt(params.get('price') || '0');
-    const period = params.get('period') || '';
-    const hasDesignAddon = params.get('design') === 'true';
+    const checkoutContent = document.getElementById('checkout-content');
+    const authGate = document.getElementById('auth-gate');
+    const currentUser = getCurrentUser();
 
-    const designAddonPrice = 2999;
-    const paymentSetupAddonPrice = 299;
-
-    let totalPrice = basePrice;
-
-    // Populate summary
-    document.getElementById('summary-plan-name').textContent = `${planName} (${period})`;
-    document.getElementById('summary-base-price').textContent = `₹${basePrice}`;
-    
-    const designAddonSummary = document.getElementById('design-addon-summary');
-    if (hasDesignAddon) {
-        totalPrice += designAddonPrice;
-        document.getElementById('summary-design-price').textContent = `₹${designAddonPrice}`;
-        designAddonSummary.style.display = 'flex';
+    if (!currentUser) {
+        authGate.innerHTML = `
+            <div class="auth-gate-content">
+                <h2>Please Login to Continue</h2>
+                <p>You need to be logged in to complete your purchase.</p>
+                <a href="/login/?returnUrl=${encodeURIComponent(window.location.href)}" class="btn btn-primary">Login or Sign Up</a>
+            </div>
+        `;
+        return;
     }
 
-    const paymentSetupCheckbox = document.getElementById('payment-setup-addon');
-    const totalAmountEl = document.getElementById('summary-total-price');
+    checkoutContent.style.display = 'block';
 
-    const updateTotal = () => {
-        let currentTotal = basePrice + (hasDesignAddon ? designAddonPrice : 0);
-        if (paymentSetupCheckbox.checked) {
-            currentTotal += paymentSetupAddonPrice;
-        }
-        totalAmountEl.textContent = `₹${currentTotal}`;
-        return currentTotal;
-    };
+    // Pre-fill user details
+    document.getElementById('name').value = currentUser.name;
+    document.getElementById('email').value = currentUser.email;
+    document.getElementById('phone').value = currentUser.phone;
+    
+    const params = new URLSearchParams(window.location.search);
+    const planName = params.get('plan') || 'N/A';
+    const duration = parseInt(params.get('duration') || '0');
+    const basePrice = parseInt(params.get('price') || '0');
+    const designPrice = parseInt(params.get('designPrice') || '0');
+    const savings = parseInt(params.get('savings') || '0');
+    const total = parseInt(params.get('total') || '0');
 
-    paymentSetupCheckbox.addEventListener('change', updateTotal);
-    totalAmountEl.textContent = `₹${updateTotal()}`;
+    // Populate summary
+    document.getElementById('summary-plan-name').textContent = planName;
+    document.getElementById('summary-plan-duration').textContent = `${duration} Months`;
+    document.getElementById('summary-base-price').textContent = `₹${basePrice}`;
+    document.getElementById('summary-design-price').textContent = `₹${designPrice}`;
+    document.getElementById('summary-total-price').textContent = `₹${total}`;
 
-    // Handle payment
+    if (savings > 0) {
+        document.getElementById('savings-summary').style.display = 'flex';
+        document.getElementById('summary-savings').textContent = `₹${savings.toFixed(2)}`;
+    }
+
     const payBtn = document.getElementById('pay-now-btn');
     payBtn.addEventListener('click', () => {
         const form = document.getElementById('customer-details-form');
@@ -51,9 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const websiteType = document.getElementById('website-type').value;
         const designStyle = document.getElementById('design-style').value;
         const featuresNeeded = document.getElementById('features-needed').value;
-        const paymentSetup = paymentSetupCheckbox.checked;
         
-        const finalAmount = updateTotal();
+        const finalAmount = total;
 
         const orderDetails = {
             orderId: `order_${Date.now()}`,
@@ -63,10 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
             customer: { name, email, phone },
             plan: {
                 name: planName,
-                period: period,
-                basePrice: basePrice,
-                hasDesignAddon: hasDesignAddon,
-                hasPaymentSetup: paymentSetup,
+                duration: duration,
+                hostingCost: basePrice,
+                designCost: designPrice,
                 total: finalAmount
             },
             project: { websiteType, designStyle, featuresNeeded }
@@ -83,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let orders = JSON.parse(localStorage.getItem('orders')) || [];
                 orders.push(orderDetails);
                 localStorage.setItem('orders', JSON.stringify(orders));
-                window.location.href = 'payment-successful.html';
+                window.location.href = '/payment-successful/';
             },
             "prefill": {
                 "name": name,

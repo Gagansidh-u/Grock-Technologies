@@ -1,24 +1,41 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const ordersContent = document.getElementById('orders-content');
+    const profileContent = document.getElementById('profile-content');
     const authGate = document.getElementById('auth-gate');
-    const ordersListContainer = document.getElementById('orders-list');
-    const currentUser = getCurrentUser();
+    const ordersListContainer = document.getElementById('profile-orders-list');
+    const currentUserSession = getCurrentUser();
 
-    if (!currentUser) {
-        ordersContent.style.display = 'none';
+    if (!currentUserSession) {
+        profileContent.style.display = 'none';
         authGate.innerHTML = `
             <div class="auth-gate-content">
-                <h2>Please Login to View Your Orders</h2>
-                <p>You need to be logged in to see your order history.</p>
-                <a href="/login/?returnUrl=/orders/" class="btn btn-primary">Login or Sign Up</a>
+                <h2>Please Login to View Your Profile</h2>
+                <p>You need to be logged in to see your profile and order history.</p>
+                <a href="/login/?returnUrl=/profile/" class="btn btn-primary">Login or Sign Up</a>
             </div>
         `;
         return;
     }
 
-    ordersContent.style.display = 'block';
+    profileContent.style.display = 'block';
     authGate.style.display = 'none';
 
+    // Fetch the most up-to-date user info from localStorage
+    const allUsers = getUsers();
+    const currentUser = allUsers.find(u => u.email === currentUserSession.email);
+
+    if (!currentUser) {
+         // This case might happen if an admin deletes the user
+        logoutUser();
+        window.location.href = '/login/';
+        return;
+    }
+
+    // Populate profile details
+    document.getElementById('profile-name').textContent = currentUser.name;
+    document.getElementById('profile-email').textContent = currentUser.email;
+    document.getElementById('profile-phone').textContent = currentUser.phone;
+
+    // Populate orders (similar to orders.js)
     const allOrders = JSON.parse(localStorage.getItem('orders')) || [];
     const userOrders = allOrders.filter(order => order.customer.email === currentUser.email);
 
@@ -40,29 +57,19 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="order-details">
                 <div class="detail-item">
-                    <strong>Customer Details</strong>
-                    <p>
-                        Name: ${order.customer.name}<br>
-                        Email: ${order.customer.email}<br>
-                        Phone: ${order.customer.phone}
-                    </p>
+                    <strong>Date Placed</strong>
+                    <p>${new Date(order.date).toLocaleDateString()}</p>
                 </div>
                 <div class="detail-item">
                     <strong>Plan Details</strong>
                     <p>
                         Plan: ${order.plan.name} (${order.plan.duration} Months)<br>
-                        Hosting Cost: ₹${order.plan.hostingCost}<br>
-                        Design Cost: ₹${order.plan.designCost}<br>
                         <strong>Total Paid: ₹${order.plan.total}</strong>
                     </p>
                 </div>
                 <div class="detail-item">
-                    <strong>Project Requirements</strong>
-                    <p>
-                        <strong>Website Type:</strong><br>${order.project.websiteType}<br><br>
-                        <strong>Design Style:</strong><br>${order.project.designStyle}<br><br>
-                        <strong>Features Needed:</strong><br>${order.project.featuresNeeded}
-                    </p>
+                    <strong>Payment ID</strong>
+                    <p>${order.paymentId || 'N/A'}</p>
                 </div>
             </div>
         `;

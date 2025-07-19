@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - Grock Technologies</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="/" class="brand-link">
+                    <img src="/Logo.png" alt="Grock Technologies Logo" class="logo">
+                    <span>Grock Technologies</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/#home" class="nav-link">Home</a></li>
+                <li><a href="/#features" class="nav-link">Features</a></li>
+                <li><a href="/pricing/" class="nav-link">Pricing</a></li>
+                <li><a href="/about/" class="nav-link">About Us</a></li>
+                <li><a href="/#contact" class="nav-link">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Legal</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="/terms-conditions/">Terms & Conditions</a></li>
+                        <li><a href="/cancellation-refund/">Cancellation & Refund</a></li>
+                        <li><a href="/shipping-delivery/">Shipping & Delivery</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="nav-auth">
+                <!-- Auth links will be injected by auth.js -->
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing page-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Choose Your Perfect Plan</h2>
+                <p>All hosting plans include a one-time website design and setup fee of ₹2,999.</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <!-- Hostinger Single Plan -->
+                <div class="pricing-card" data-plan-name="Single Web Hosting" data-monthly-price="149">
+                    <div class="pricing-badge">
+                        <span class="powered-badge">Powered by Hostinger</span>
+                    </div>
+                    <h3>Single Web Hosting</h3>
+                    <div class="price-display">
+                        <div class="price">
+                            <span class="currency">₹</span>
+                            <span class="amount">149</span>
+                            <span class="period">/month</span>
+                        </div>
+                        <div class="original-price">
+                           <span>Billed based on duration</span>
+                        </div>
+                    </div>
+                    <ul class="features-list">
+                        <li>✓ 1 Website</li>
+                        <li>✓ 50 GB SSD Storage</li>
+                        <li>✓ Weekly Backups</li>
+                        <li>✓ Free SSL Certificate</li>
+                        <li>✓ 24/7 Customer Support</li>
+                        <li>✓ 1 Email Account</li>
+                    </ul>
+                    <div class="plan-controls">
+                        <label for="duration-single" class="duration-label">Select Duration:</label>
+                        <select class="duration-select">
+                            <option value="1" data-discount="0">1 Month (0% off)</option>
+                            <option value="12" data-discount="48">12 Months (48% off)</option>
+                            <option value="24" data-discount="60">24 Months (60% off)</option>
+                            <option value="48" data-discount="72">48 Months (72% off)</option>
+                        </select>
+                    </div>
+                    <div class="total-price-display">
+                        <p>Total: <span class="total-amount">₹3148.00</span></p>
+                        <p class="savings-text">Includes ₹2999 design fee.</p>
+                    </div>
+                    <button class="btn btn-primary checkout-btn">Choose Plan</button>
+                </div>
+
+                <!-- Hostinger Premium Plan -->
+                <div class="pricing-card popular" data-plan-name="Premium Web Hosting" data-monthly-price="249">
+                    <div class="pricing-badge">
+                        <span class="powered-badge">Powered by Hostinger</span>
+                    </div>
+                    <div class="popular-tag">Most Popular</div>
+                    <h3>Premium Web Hosting</h3>
+                     <div class="price-display">
+                        <div class="price">
+                            <span class="currency">₹</span>
+                            <span class="amount">249</span>
+                            <span class="period">/month</span>
+                        </div>
+                         <div class="original-price">
+                           <span>Billed based on duration</span>
+                        </div>
+                    </div>
+                    <ul class="features-list">
+                        <li>✓ 100 Websites</li>
+                        <li>✓ 100 GB SSD Storage</li>
+                        <li>✓ Weekly Backups</li>
+                        <li>✓ Free SSL & Domain</li>
+                        <li>✓ 24/7 Priority Support</li>
+                        <li>✓ Free Email</li>
+                    </ul>
+                     <div class="plan-controls">
+                        <label for="duration-premium" class="duration-label">Select Duration:</label>
+                        <select class="duration-select">
+                            <option value="1" data-discount="0">1 Month (0% off)</option>
+                            <option value="12" data-discount="48">12 Months (48% off)</option>
+                            <option value="24" data-discount="60">24 Months (60% off)</option>
+                            <option value="48" data-discount="72">48 Months (72% off)</option>
+                        </select>
+                    </div>
+                    <div class="total-price-display">
+                        <p>Total: <span class="total-amount">₹3248.00</span></p>
+                        <p class="savings-text">Includes ₹2999 design fee.</p>
+                    </div>
+                    <button class="btn btn-primary checkout-btn">Choose Plan</button>
+                </div>
+
+                <!-- Hostinger Business Plan -->
+                <div class="pricing-card" data-plan-name="Business Web Hosting" data-monthly-price="399">
+                    <div class="pricing-badge">
+                        <span class="powered-badge">Powered by Hostinger</span>
+                    </div>
+                    <h3>Business Web Hosting</h3>
+                    <div class="price-display">
+                        <div class="price">
+                            <span class="currency">₹</span>
+                            <span class="amount">399</span>
+                            <span class="period">/month</span>
+                        </div>
+                         <div class="original-price">
+                           <span>Billed based on duration</span>
+                        </div>
+                    </div>
+                    <ul class="features-list">
+                        <li>✓ 100 Websites</li>
+                        <li>✓ 200 GB SSD Storage</li>
+                        <li>✓ Daily Backups</li>
+                        <li>✓ Free SSL, Domain & CDN</li>
+                        <li>✓ 24/7 Priority Support</li>
+                        <li>✓ Free Email</li>
+                    </ul>
+                     <div class="plan-controls">
+                        <label for="duration-business" class="duration-label">Select Duration:</label>
+                        <select class="duration-select">
+                            <option value="1" data-discount="0">1 Month (0% off)</option>
+                            <option value="12" data-discount="48">12 Months (48% off)</option>
+                            <option value="24" data-discount="60">24 Months (60% off)</option>
+                            <option value="48" data-discount="72">48 Months (72% off)</option>
+                        </select>
+                    </div>
+                    <div class="total-price-display">
+                        <p>Total: <span class="total-amount">₹3398.00</span></p>
+                        <p class="savings-text">Includes ₹2999 design fee.</p>
+                    </div>
+                    <button class="btn btn-primary checkout-btn">Choose Plan</button>
+                </div>
+
+                <!-- Custom Website Plan -->
+                <div class="pricing-card custom" data-plan-name="Custom Website" data-monthly-price="3999">
+                    <div class="pricing-badge">
+                        <span class="custom-badge">Custom Solution</span>
+                    </div>
+                    <h3>Custom Website</h3>
+                    <div class="price">
+                        <span class="currency">₹</span>
+                        <span class="amount">3,999</span>
+                        <span class="period">one-time</span>
+                    </div>
+                    <ul class="features-list">
+                        <li>✓ Fully Custom Design</li>
+                        <li>✓ Responsive Development</li>
+                        <li>✓ SEO Optimization</li>
+                        <li>✓ Content Management</li>
+                        <li>✓ Social Media Integration</li>
+                        <li>✓ 3 Months Free Support</li>
+                        <li>✓ Source Code Delivery</li>
+                    </ul>
+                    <button class="btn btn-primary checkout-btn custom-checkout">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Grock Technologies</h3>
+                    <p>Building exceptional websites for businesses worldwide.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/#home">Home</a></li>
+                        <li><a href="/#features">Features</a></li>
+                        <li><a href="/pricing/">Pricing</a></li>
+                        <li><a href="/about/">About Us</a></li>
+                        <li><a href="/#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="/terms-conditions/">Terms & Conditions</a></li>
+                        <li><a href="/cancellation-refund/">Cancellation & Refund</a></li>
+                        <li><a href="/shipping-delivery/">Shipping & Delivery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p>517, Sidhu Patti, Uppli<br>Barnala, Punjab - 148105<br>India</p>
+                    <p>Email: help.grock@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Grock Technologies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="/auth.js"></script>
+    <script src="/script.js"></script>
+</body>
+</html>

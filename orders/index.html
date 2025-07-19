@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - Grock Technologies</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="/" class="brand-link">
+                    <img src="/Logo.png" alt="Grock Technologies Logo" class="logo">
+                    <span>Grock Technologies</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/#home" class="nav-link">Home</a></li>
+                <li><a href="/#features" class="nav-link">Features</a></li>
+                <li><a href="/pricing/" class="nav-link">Pricing</a></li>
+                <li><a href="/about/" class="nav-link">About Us</a></li>
+                <li><a href="/#contact" class="nav-link">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Legal</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="/terms-conditions/">Terms & Conditions</a></li>
+                        <li><a href="/cancellation-refund/">Cancellation & Refund</a></li>
+                        <li><a href="/shipping-delivery/">Shipping & Delivery</a></li>
+                    </ul>
+                </li>
+            </ul>
+             <div class="nav-auth">
+                <!-- Auth links will be injected by auth.js -->
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    <main class="orders-page">
+        <div class="container">
+            <div id="auth-gate">
+                 <!-- This will be populated by JS if user is not logged in -->
+            </div>
+            <div id="orders-content" style="display: none;">
+                <div class="section-header">
+                    <h2>My Orders</h2>
+                    <p>Here is a list of all your submitted orders.</p>
+                </div>
+                <div id="orders-list" class="orders-list">
+                    <!-- Orders will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="/auth.js"></script>
+    <script src="/orders.js"></script>
+    <script src="/script.js"></script>
+</body>
+</html>

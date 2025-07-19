@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Grock Technologies</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="/" class="brand-link">
+                    <img src="/Logo.png" alt="Grock Technologies Logo" class="logo">
+                    <span>Grock Technologies</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/#home" class="nav-link">Home</a></li>
+                <li><a href="/#features" class="nav-link">Features</a></li>
+                <li><a href="/pricing/" class="nav-link">Pricing</a></li>
+                <li><a href="/about/" class="nav-link">About Us</a></li>
+                <li><a href="/#contact" class="nav-link">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Legal</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="/terms-conditions/">Terms & Conditions</a></li>
+                        <li><a href="/cancellation-refund/">Cancellation & Refund</a></li>
+                        <li><a href="/shipping-delivery/">Shipping & Delivery</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="nav-auth">
+                <!-- Auth links will be injected by auth.js -->
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="checkout-page">
+        <div class="container">
+            <div id="auth-gate">
+                <!-- This will be populated by JS if user is not logged in -->
+            </div>
+            <div id="checkout-content" style="display: none;">
+                <div class="section-header">
+                    <h2>Complete Your Order</h2>
+                    <p>Fill in your details to finalize your plan.</p>
+                </div>
+                <div class="checkout-layout">
+                    <div class="checkout-form">
+                        <h3>Your Details</h3>
+                        <form id="customer-details-form">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" placeholder="Enter your email" required readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" placeholder="+91 12345 67890" required>
+                            </div>
+                            <h3>Project Details</h3>
+                            <div class="form-group">
+                                <label for="website-type">What type of website do you need?</label>
+                                <textarea id="website-type" rows="3" placeholder="e.g., E-commerce, Portfolio, Blog, Corporate" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="design-style">Describe your desired design style</label>
+                                <textarea id="design-style" rows="3" placeholder="e.g., Minimalist, Modern, Colorful, Professional" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="features-needed">What specific features do you need?</label>
+                                <textarea id="features-needed" rows="4" placeholder="e.g., User login, photo gallery, booking system" required></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="order-summary">
+                        <h3>Order Summary</h3>
+                        <div class="summary-card">
+                            <div class="summary-item">
+                                <span>Plan</span>
+                                <strong id="summary-plan-name">N/A</strong>
+                            </div>
+                            <div class="summary-item">
+                                <span>Duration</span>
+                                <strong id="summary-plan-duration">N/A</strong>
+                            </div>
+                            <div class="summary-item">
+                                <span>Hosting Cost</span>
+                                <span id="summary-base-price">₹0</span>
+                            </div>
+                            <div class="summary-item" id="design-addon-summary">
+                                <span>Website Design</span>
+                                <span id="summary-design-price">₹0</span>
+                            </div>
+                            <hr>
+                            <div class="summary-item" id="payment-setup-summary" style="display: none;">
+                                <span>Payment Setup</span>
+                                <span id="summary-payment-setup-price">₹0</span>
+                            </div>
+                            <div class="summary-item" id="savings-summary" style="display: none;">
+                                <span>You Save</span>
+                                <strong id="summary-savings" style="color: #10b981;">₹0</strong>
+                            </div>
+                            <hr>
+                            <div class="summary-total">
+                                <strong>Total</strong>
+                                <strong id="summary-total-price">₹0</strong>
+                            </div>
+                            <button id="pay-now-btn" class="btn btn-primary">Pay Now</button>
+                        </div>
+                        <div class="secure-checkout-badge">
+                            <p>🔒 Secure Checkout powered by Razorpay</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="/auth.js"></script>
+    <script src="/checkout.js"></script>
+    <script src="/script.js"></script>
+</body>
+</html>

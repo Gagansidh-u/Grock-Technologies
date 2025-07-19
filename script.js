@@ -9,7 +9,6 @@ if (navToggle && navMenu) {
     });
 }
 
-
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
@@ -40,78 +39,87 @@ document.addEventListener('DOMContentLoaded', function() {
     const pricingPage = document.querySelector('.pricing.page-section');
     if (!pricingPage) return;
 
-    const durationBtns = document.querySelectorAll('.duration-btn');
-    const checkoutBtns = document.querySelectorAll('.checkout-btn');
+    const designFee = 2999;
 
-    // Plan Duration Logic
-    durationBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const duration = this.dataset.duration;
-            
-            durationBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            
-            const isMonthly = duration === 'monthly';
-            
-            document.querySelectorAll('.monthly-price, .monthly-period, .monthly-original').forEach(el => el.style.display = isMonthly ? 'inline' : 'none');
-            document.querySelectorAll('.yearly-price, .yearly-period, .yearly-original').forEach(el => el.style.display = isMonthly ? 'none' : 'inline');
-        });
+    const calculatePrice = (card) => {
+        const baseMonthlyPrice = parseFloat(card.dataset.monthlyPrice);
+        const durationSelect = card.querySelector('.duration-select');
+        const selectedOption = durationSelect.options[durationSelect.selectedIndex];
+        
+        const duration = parseInt(selectedOption.value);
+        const discountPercent = parseFloat(selectedOption.dataset.discount);
+
+        const discountedMonthlyPrice = baseMonthlyPrice * (1 - discountPercent / 100);
+        const totalHostingCost = discountedMonthlyPrice * duration;
+        const originalTotalHostingCost = baseMonthlyPrice * duration;
+        const savings = originalTotalHostingCost - totalHostingCost;
+        const finalTotal = totalHostingCost + designFee;
+
+        const totalAmountEl = card.querySelector('.total-amount');
+        const savingsTextEl = card.querySelector('.savings-text');
+
+        totalAmountEl.textContent = `₹${finalTotal.toFixed(2)}`;
+        if (savings > 0) {
+            savingsTextEl.innerHTML = `Includes ₹${designFee} design fee.<br>You save ₹${savings.toFixed(2)} on hosting!`;
+            savingsTextEl.style.color = '#10b981';
+        } else {
+            savingsTextEl.innerHTML = `Includes ₹${designFee} design fee.`;
+            savingsTextEl.style.color = '#64748b';
+        }
+    };
+
+    document.querySelectorAll('.pricing-card:not(.custom)').forEach(card => {
+        const durationSelect = card.querySelector('.duration-select');
+        durationSelect.addEventListener('change', () => calculatePrice(card));
+        calculatePrice(card); // Initial calculation
     });
 
-    // Initialize pricing display to monthly
-    if (document.querySelector('.duration-btn[data-duration="monthly"]')) {
-        document.querySelector('.duration-btn[data-duration="monthly"]').click();
-    }
-
     // Checkout Button Logic
-    checkoutBtns.forEach(button => {
+    document.querySelectorAll('.checkout-btn').forEach(button => {
         button.addEventListener('click', function() {
             const card = this.closest('.pricing-card');
             const planName = card.dataset.planName;
-            const isDesignAddon = card.querySelector('.design-addon')?.checked || false;
-            const activeDurationBtn = document.querySelector('.duration-btn.active');
-            let activeDuration = 'one-time';
-            let price = card.dataset.monthlyPrice; // Default to one-time price for custom plan
-
-            if (activeDurationBtn) {
-                activeDuration = activeDurationBtn.dataset.duration;
-                price = card.dataset[`${activeDuration}Price`];
-            }
             
-            const period = activeDuration;
+            let params;
 
-            const params = new URLSearchParams({
-                plan: planName,
-                price: price,
-                period: period,
-                design: isDesignAddon
-            });
+            if (card.classList.contains('custom')) {
+                 params = new URLSearchParams({
+                    plan: planName,
+                    duration: 1,
+                    price: 0,
+                    designPrice: 3999,
+                    savings: 0,
+                    total: 3999
+                });
+            } else {
+                const baseMonthlyPrice = parseFloat(card.dataset.monthlyPrice);
+                const durationSelect = card.querySelector('.duration-select');
+                const selectedOption = durationSelect.options[durationSelect.selectedIndex];
+                
+                const duration = parseInt(selectedOption.value);
+                const discountPercent = parseFloat(selectedOption.dataset.discount);
 
-            window.location.href = `checkout.html?${params.toString()}`;
+                const discountedMonthlyPrice = baseMonthlyPrice * (1 - discountPercent / 100);
+                const totalHostingCost = discountedMonthlyPrice * duration;
+                const originalTotalHostingCost = baseMonthlyPrice * duration;
+                const savings = originalTotalHostingCost - totalHostingCost;
+                const finalTotal = totalHostingCost + designFee;
+                
+                params = new URLSearchParams({
+                    plan: planName,
+                    duration: duration,
+                    price: totalHostingCost.toFixed(0),
+                    designPrice: designFee,
+                    savings: savings.toFixed(0),
+                    total: finalTotal.toFixed(0)
+                });
+            }
+
+            window.location.href = `/checkout/?${params.toString()}`;
         });
     });
 });
 
-// Contact Form Handling
-const contactForm = document.querySelector('.contact-form form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const name = this.querySelector('input[type="text"]').value;
-        const email = this.querySelector('input[type="email"]').value;
-        const subject = this.querySelector('input[placeholder="Subject"]').value;
-        const message = this.querySelector('textarea').value;
-        
-        if (!name || !email || !subject || !message) {
-            alert('Please fill in all fields');
-            return;
-        }
-        
-        alert('Thank you for your message! We will get back to you soon.');
-        this.reset();
-    });
-}
 
 // Navbar Scroll Effect
 window.addEventListener('scroll', function() {
@@ -127,33 +135,29 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// Animate on Scroll
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+// Contact Form Submission
+document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(contactForm);
+            const message = {
+                id: `msg_${Date.now()}`,
+                name: formData.get('name'),
+                email: formData.get('email'),
+                subject: formData.get('subject'),
+                message: formData.get('message'),
+                date: new Date().toISOString(),
+                read: false
+            };
 
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-            observer.unobserve(entry.target);
-        }
-    });
-}, observerOptions);
+            let emails = JSON.parse(localStorage.getItem('grock_emails')) || [];
+            emails.unshift(message); // Add to the beginning of the array
+            localStorage.setItem('grock_emails', JSON.stringify(emails));
 
-document.querySelectorAll('.feature-card, .pricing-card, .contact-item, .about-content > *').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
-});
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', function(event) {
-    if (navMenu && !event.target.closest('.navbar')) {
-        navMenu.classList.remove('active');
-        if (navToggle) navToggle.classList.remove('active');
+            alert('Thank you for your message! We will get back to you soon.');
+            contactForm.reset();
+        });
     }
 });

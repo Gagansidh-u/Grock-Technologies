@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Grock Technologies</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="auth-page">
+        <div class="auth-container">
+            <h2>Create an Account</h2>
+            <form id="signup-form" class="auth-form">
+                <p id="auth-error" class="auth-error"></p>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number (with country code)</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required minlength="6">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+            </form>
+            <p class="auth-switch">Already have an account? <a href="/login/">Login</a></p>
+            <p class="auth-note">Note: This is a demo implementation using browser storage. For a real application, a secure backend is required for authentication.</p>
+        </div>
+    </main>
+    <script src="/auth.js"></script>
+</body>
+</html>
