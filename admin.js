@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Import Firebase services
+    // Import Firebase services 
     import('./firebase-service.js').then(({ 
         listenToEmails, 
         listenToOrders, 
