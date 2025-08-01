@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Import Firebase service
+    // Import Firebase service 
     import('./firebase-service.js').then(({ saveOrder }) => {
         initializeCheckout(saveOrder);
     }).catch(error => {
