@@ -1,4 +1,4 @@
-// --- User Authentication (Client-Side Simulation) ---
+// --- User Authentication (Client-Side Simulation) --- 
 // User Authentication with Firebase Integration
 import { saveUser as saveUserToFirebase, getUsers as getUsersFromFirebase } from './firebase-service.js';
 
