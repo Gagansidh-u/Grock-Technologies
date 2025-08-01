@@ -137,27 +137,64 @@ window.addEventListener('scroll', function() {
 
 // Contact Form Submission
 document.addEventListener('DOMContentLoaded', () => {
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const formData = new FormData(contactForm);
-            const message = {
-                id: `msg_${Date.now()}`,
-                name: formData.get('name'),
-                email: formData.get('email'),
-                subject: formData.get('subject'),
-                message: formData.get('message'),
-                date: new Date().toISOString(),
-                read: false
-            };
+    // Import Firebase service for contact form
+    import('./firebase-service.js').then(({ saveEmail }) => {
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(contactForm);
+                const message = {
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    subject: formData.get('subject'),
+                    message: formData.get('message'),
+                    date: new Date().toISOString(),
+                    read: false
+                };
 
-            let emails = JSON.parse(localStorage.getItem('grock_emails')) || [];
-            emails.unshift(message); // Add to the beginning of the array
-            localStorage.setItem('grock_emails', JSON.stringify(emails));
+                try {
+                    // Save to Firebase
+                    await saveEmail(message);
+                    
+                    // Also save to localStorage for backward compatibility
+                    let emails = JSON.parse(localStorage.getItem('grock_emails')) || [];
+                    emails.unshift({ ...message, id: `msg_${Date.now()}` });
+                    localStorage.setItem('grock_emails', JSON.stringify(emails));
 
-            alert('Thank you for your message! We will get back to you soon.');
-            contactForm.reset();
-        });
-    }
+                    alert('Thank you for your message! We will get back to you soon.');
+                    contactForm.reset();
+                } catch (error) {
+                    console.error('Error sending message:', error);
+                    alert('There was an error sending your message. Please try again.');
+                }
+            });
+        }
+    }).catch(error => {
+        console.error('Error loading Firebase service:', error);
+        // Fallback to localStorage only
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(contactForm);
+                const message = {
+                    id: `msg_${Date.now()}`,
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    subject: formData.get('subject'),
+                    message: formData.get('message'),
+                    date: new Date().toISOString(),
+                    read: false
+                };
+
+                let emails = JSON.parse(localStorage.getItem('grock_emails')) || [];
+                emails.unshift(message); // Add to the beginning of the array
+                localStorage.setItem('grock_emails', JSON.stringify(emails));
+
+                alert('Thank you for your message! We will get back to you soon.');
+                contactForm.reset();
+            });
+        }
+    });
 });

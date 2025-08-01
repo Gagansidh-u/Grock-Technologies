@@ -1,7 +1,6 @@
 // --- User Authentication (Client-Side Simulation) ---
-// IMPORTANT: This is a client-side only simulation of user authentication.
-// It uses localStorage and is NOT secure. For a real-world application,
-// you MUST use a proper backend server for handling users and authentication.
+// User Authentication with Firebase Integration
+import { saveUser as saveUserToFirebase, getUsers as getUsersFromFirebase } from './firebase-service.js';
 
 const USERS_KEY = 'grock_users';
 const CURRENT_USER_KEY = 'grock_current_user_session';
@@ -16,7 +15,7 @@ const logoutUser = () => sessionStorage.removeItem(CURRENT_USER_KEY);
 // --- Core Auth Logic ---
 
 // Sign Up
-const handleSignUp = (e) => {
+const handleSignUp = async (e) => {
     e.preventDefault();
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value.toLowerCase();
@@ -24,18 +23,28 @@ const handleSignUp = (e) => {
     const password = document.getElementById('password').value;
     const errorEl = document.getElementById('auth-error');
 
-    const users = getUsers();
-    if (users.find(user => user.email === email)) {
-        errorEl.textContent = 'An account with this email already exists.';
-        return;
-    }
+    try {
+        const users = getUsers();
+        if (users.find(user => user.email === email)) {
+            errorEl.textContent = 'An account with this email already exists.';
+            return;
+        }
 
-    const newUser = { name, email, phone, password }; // In a real app, hash the password!
-    users.push(newUser);
-    saveUsers(users);
-    
-    alert('Sign up successful! Please log in.');
-    window.location.href = '/login/';
+        const newUser = { name, email, phone, password }; // In a real app, hash the password!
+        
+        // Save to Firebase
+        await saveUserToFirebase(newUser);
+        
+        // Save to localStorage for backward compatibility
+        users.push(newUser);
+        saveUsers(users);
+        
+        alert('Sign up successful! Please log in.');
+        window.location.href = '/login/';
+    } catch (error) {
+        console.error('Sign up error:', error);
+        errorEl.textContent = 'An error occurred during sign up. Please try again.';
+    }
 };
 
 // Login

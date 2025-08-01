@@ -1,4 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Import Firebase service
+    import('./firebase-service.js').then(({ saveOrder }) => {
+        initializeCheckout(saveOrder);
+    }).catch(error => {
+        console.error('Error loading Firebase service:', error);
+        initializeCheckout();
+    });
+});
+
+function initializeCheckout(saveOrderToFirebase) {
     const checkoutContent = document.getElementById('checkout-content');
     const authGate = document.getElementById('auth-gate');
     const currentUser = getCurrentUser();
@@ -80,11 +90,23 @@ document.addEventListener('DOMContentLoaded', () => {
             "currency": "INR",
             "name": "Grock Technologies",
             "description": `Payment for ${planName}`,
-            "handler": function (response){
+            "handler": async function (response){
                 orderDetails.paymentId = response.razorpay_payment_id;
-                let orders = JSON.parse(localStorage.getItem('orders')) || [];
-                orders.push(orderDetails);
-                localStorage.setItem('orders', JSON.stringify(orders));
+                
+                try {
+                    // Save to Firebase if available
+                    if (saveOrderToFirebase) {
+                        await saveOrderToFirebase(orderDetails);
+                    }
+                    
+                    // Also save to localStorage for backward compatibility
+                    let orders = JSON.parse(localStorage.getItem('orders')) || [];
+                    orders.push(orderDetails);
+                    localStorage.setItem('orders', JSON.stringify(orders));
+                } catch (error) {
+                    console.error('Error saving order:', error);
+                }
+                
                 window.location.href = '/payment-successful/';
             },
             "prefill": {
@@ -122,4 +144,4 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Could not initialize payment gateway. Please check your connection or contact support.");
         }
     });
-});
+}
